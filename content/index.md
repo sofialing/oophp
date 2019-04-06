@@ -4,6 +4,8 @@ title: "Min fina titel"
 Min me-sida i kursen oophp
 =========================
 
+[FIGURE src="image/me.jpg?w=300" class="right"]
+
 Hej! Mitt namn är Sofia Ling och jag är 27 år gammal. Född och uppvuxen i den lilla bruksorten Fagersta i Västmanland men har i snart två år bott i Helsingborg tillsammans med min sambo och våra två katter. Jag arbetar som grafisk formgivare på Kristianstadsbladet sedan ca två och halvt år tillbaka.
 
 Innan jag hamnade här i Helsinborg har jag hunnit bo i Nybro utanför Kalmar där jag under tre år studerade Reklam, Grafisk design och Visuell kommuniktion vid Linnéuniversitet. Efter min examen flyttade jag vidare till Karlskrona tillsammans med min sambo, där bodde vi i tre år medan min sambo studerade på BTH. I Karlskrona läste jag olika distanskurser inom grafisk design och webbdesign samt arbetade ett år som originalare på en reklambyrå.
