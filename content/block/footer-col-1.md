@@ -1,3 +1,5 @@
-#### Footer col 1
+### Färgväljare:
 
-Med brödtext i ett stycke som säger något trevligt om just detta block, eller kanske en lista av länkar.
+* [Adobe Color](https://color.adobe.com)
+* [Flat UI Color Picker](http://www.flatuicolorpicker.com/)
+* [Coolors](https://coolors.co/)

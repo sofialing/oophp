@@ -1,3 +1,5 @@
-#### Footer col 2
+### Typsnitt:
 
-Med brödtext i ett stycke som säger något trevligt om just detta block, eller kanske en lista av länkar.
+* [Google fonts](https://fonts.google.com/)
+* [Adobe fonts](https://fonts.adobe.com/)
+* [Font squirrel](https://www.fontsquirrel.com)

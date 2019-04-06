@@ -1,3 +1,5 @@
-#### Footer col 3
+### Bilder:
 
-Med brödtext i ett stycke som säger något trevligt om just detta block, eller kanske en lista av länkar.
+* [Pixabay](https://pixabay.com)
+* [Pexels](https://www.pexels.com/)
+* [Unsplash](https://unsplash.com/)
