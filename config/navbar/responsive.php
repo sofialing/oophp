@@ -26,11 +26,6 @@ return [
             "title" => "Om denna webbplats.",
         ],
         [
-            "text" => "Styleväljare",
-            "url" => "style",
-            "title" => "Välj stylesheet.",
-        ],
-        [
             "text" => "Docs",
             "url" => "dokumentation",
             "title" => "Dokumentation av ramverk och liknande.",
