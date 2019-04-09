@@ -15,6 +15,6 @@ $content = $content ?? null;
 
 
 
-?><div class="$class">
+?><div class="<$class">
 <?= $content ?>
 </div>
