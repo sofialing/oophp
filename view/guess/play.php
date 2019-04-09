@@ -16,7 +16,7 @@ namespace Anax\View;
 
 <form method="post">
     <input type="text" name="guess">
-    <input type="submit" name="doGuess" value="Gissa" <?= ($tries === 0) ? "disabled" : "" ?> >
+    <input type="submit" name="doGuess" value="Gissa" <?= ($tries === 0 || $res === "RÄTT!") ? "disabled" : "" ?> >
     <input type="submit" name="doInit" value="Starta nytt spel">
     <input type="submit" name="doCheat" value="Fuska">
 </form>

@@ -42,7 +42,7 @@ class Guess
      */
     public function random()
     {
-        return $this->number = rand(1, 100);
+        $this->number = rand(1, 100);
     }
 
     /**
