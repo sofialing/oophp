@@ -91,7 +91,6 @@ $app->router->get("guess/guess", function () use ($app) {
     $game = new Soln\Guess\Guess($number, $tries);
     $_SESSION["res"] = $game->makeGuess($guess);
     $_SESSION["tries"] = $game->tries();
-    $_SESSION["guess"] = $guess;
 
     // Redirect back to game page
     return $app->response->redirect("guess/play");
