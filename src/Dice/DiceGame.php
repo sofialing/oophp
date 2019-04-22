@@ -23,7 +23,7 @@ class DiceGame
      * @throws DiceException when $nrOfDices is too low or high.
      *
      */
-    public function __construct(string $playerName, int $nrOfDices = 2, int $nrOfPlayers = 2)
+    public function __construct(string $playerName = "Joe Doe", int $nrOfDices = 2, int $nrOfPlayers = 2)
     {
         $this->name = $playerName;
         $this->dices = $nrOfDices;
@@ -97,7 +97,7 @@ class DiceGame
     /**
      * Play as computer
      *
-     * @return void
+     * @return string
      */
     public function autoPlay()
     {
@@ -110,5 +110,6 @@ class DiceGame
             $this->diceHand[$i]->calculateSum();
             $sum = $this->diceHand[$i]->sum();
         }
+        return "Datorn har kastat färdigt";
     }
 }
