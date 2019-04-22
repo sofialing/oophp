@@ -14,6 +14,10 @@ namespace Soln\Dice;
 $app->router->get("dice/start", function () use ($app) {
     $title = "Tärningsspelet 100";
 
+    if (isset($_SESSION["game"])) {
+        return $app->response->redirect("dice/play");
+    }
+
     $app->page->add("dice/start");
 
     return $app->page->render([
@@ -146,10 +150,10 @@ $app->router->get("dice/save", function () use ($app) {
  * Reset session and redirect to start new game
  */
 $app->router->get("dice/reset", function () use ($app) {
-    $_SESSION["game"] = [];
-    $_SESSION["lastPlayer"] = [];
-    $_SESSION["lastPoints"] = [];
-    $_SESSION["lastValues"] = [];
+    unset($_SESSION['game']);
+    unset($_SESSION['lastPlayer']);
+    unset($_SESSION['lastPoints']);
+    unset($_SESSION['lastValues']);
 
     // Redirect to start new game
     return $app->response->redirect("dice/start");

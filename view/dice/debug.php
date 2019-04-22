@@ -15,8 +15,6 @@ namespace Anax\View;
 <pre>
 SESSION
 <?= var_dump($_SESSION) ?>
-PLAYER
-<?= var_dump($_SESSION["game"]) ?>
 GET
 <?= var_dump($_GET) ?>
 POST

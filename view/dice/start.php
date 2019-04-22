@@ -15,4 +15,4 @@ namespace Anax\View;
     <input type="submit" name="doInit" value="Starta nytt spel" class="btn-100">
 </form>
 
-<!-- <?php include("debug.php") ?> -->
+<?php include("debug.php") ?>
