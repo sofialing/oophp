@@ -154,7 +154,11 @@ class DiceGameTest extends TestCase
         $this->assertInstanceOf("\Soln\Dice\DiceGame", $game);
 
         $res = $game->autoPlay();
-        $exp = "Datorn har kastat färdigt";
+        if (in_array(1, $game->diceHand()[1]->values())) {
+            $exp = "";
+        } else {
+            $exp = "Datorn har kastat färdigt";
+        }
         $this->assertEquals($exp, $res);
     }
 }

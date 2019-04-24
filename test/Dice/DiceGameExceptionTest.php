@@ -13,7 +13,7 @@ class DiceGameExceptionTest extends TestCase
      * @expectedException \Soln\Dice\DiceException
      * @expectedExceptionMessage Ange ett nummer mellan 1-5
      */
-    public function testDiceGameTooHigh()
+    public function testDiceNumberTooHigh()
     {
         $game = new \Soln\Dice\DiceGame("Test name", 7);
         $this->assertInstanceOf("\Soln\Dice\DiceGame", $game);
@@ -23,7 +23,7 @@ class DiceGameExceptionTest extends TestCase
      * @expectedException \Soln\Dice\DiceException
      * @expectedExceptionMessage Ange ett nummer mellan 1-5
      */
-    public function testDiceGameTooLow()
+    public function testDiceNumberTooLow()
     {
         $game = new \Soln\Dice\DiceGame("Test name", 0);
         $this->assertInstanceOf("\Soln\Dice\DiceGame", $game);

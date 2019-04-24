@@ -101,14 +101,18 @@ class DiceGame
      */
     public function autoPlay()
     {
-        $min = 18;
+        $min = 15;
+        $sum = 0;
         $i = $this->currentPlayer;
-        $sum = $this->diceHand[$i]->sum();
 
         while ($sum < $min) {
             $this->diceHand[$i]->roll();
             $this->diceHand[$i]->calculateSum();
             $sum = $this->diceHand[$i]->sum();
+
+            if (in_array(1, $this->diceHand[$i]->values())) {
+                break;
+            }
         }
         return "Datorn har kastat färdigt";
     }
