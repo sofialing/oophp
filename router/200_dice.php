@@ -47,6 +47,7 @@ $app->router->get("dice/play", function () use ($app) {
     $title = "Tärningsspelet 100";
     // Deal with incoming variables
     $game = $_SESSION["game"];
+
     $lastPlayer = $_SESSION["lastPlayer"] ?? null;
     $lastValues = $_SESSION["lastValues"] ?? null;
     $lastPoints = $_SESSION["lastPoints"] ?? null;
