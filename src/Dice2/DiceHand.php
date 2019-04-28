@@ -116,7 +116,7 @@ class DiceHand
     /**
      * Get the dices
      *
-     * @return object the total amount of points in current game
+     * @return object the dices
      */
     public function dices()
     {

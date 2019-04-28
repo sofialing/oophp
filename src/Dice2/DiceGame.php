@@ -16,7 +16,6 @@ class DiceGame
     private $diceHand;
     private $name = [];
     private $currentPlayer;
-    private $histogram;
 
     /**
      * Constructor to initiate a new game
@@ -37,7 +36,6 @@ class DiceGame
 
         for ($i = 0; $i < $nrOfPlayers; $i++) {
             $this->diceHand[$i]  = new DiceHand($this->dices);
-            $this->histogram[$i]  = new Histogram($this->dices);
         }
     }
 
@@ -59,16 +57,6 @@ class DiceGame
     public function playerName()
     {
         return $this->name;
-    }
-
-    /**
-     * Get the players histogram
-     *
-     * @return array consisting of the players names.
-     */
-    public function histogram()
-    {
-        return $this->histogram;
     }
 
     /**
@@ -113,16 +101,25 @@ class DiceGame
      */
     public function autoPlay()
     {
-        $min = 15;
+        $playerPoints = $this->diceHand[0]->points();
+        $computerPoints = $this->diceHand[1]->points();
+        $diff = $playerPoints - $computerPoints;
+        $diceHand = $this->diceHand[1];
         $sum = 0;
-        $i = $this->currentPlayer;
+
+        if ($diff < 30 && $diff > 15) {
+            $min = $playerPoints - $computerPoints;
+        } elseif ($diff > 30) {
+            $min = 20;
+        } else {
+            $min = 15;
+        }
 
         while ($sum < $min) {
-            $this->diceHand[$i]->roll();
-            $this->diceHand[$i]->calculateSum();
-            $sum = $this->diceHand[$i]->sum();
-
-            if (in_array(1, $this->diceHand[$i]->values())) {
+            $diceHand->roll();
+            $diceHand->calculateSum();
+            $sum = $diceHand->sum();
+            if (in_array(1, $diceHand->values())) {
                 break;
             }
         }
