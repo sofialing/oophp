@@ -22,7 +22,9 @@ namespace Anax\View;
             <input type="submit" name="doInit" value="Starta nytt spel" class="btn-100">
     <?php } else { ?>
             <input type="submit" name="rollDices" value="Kasta tärningarna" class="btn-100">
-            <input type="submit" name="savePoints" value="Spara poäng" class="btn-100">
+            <?php if ($lastPoints != null) { ?>
+                <input type="submit" name="savePoints" value="Spara poäng" class="btn-100">
+            <?php } ?>
             <input type="submit" name="doInit" value="Starta nytt spel" class="btn-100">
     <?php } ?>
 </form>
