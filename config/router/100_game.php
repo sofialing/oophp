@@ -5,9 +5,9 @@
 return [
     "routes" => [
         [
-            "info" => "Dice game 100",
+            "info" => "Route for Dice game 100",
             "mount" => "game",
-            "handler" => "\Soln\Controller\DiceGameController",
+            "handler" => "\Soln\Dice2\DiceGameController",
         ],
     ]
 ];
