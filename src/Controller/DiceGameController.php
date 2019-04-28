@@ -44,7 +44,7 @@ class DiceGameController implements AppInjectableInterface
         $dices = $this->app->request->getPost('dices');
 
         // Create new game object and store in session
-        $game = new \Soln\Dice\DiceGame($name, $dices);
+        $game = new \Soln\Dice2\DiceGame($name, $dices);
         $this->app->session->set('game', $game);
 
         return $this->app->response->redirect("game/play");
@@ -60,8 +60,11 @@ class DiceGameController implements AppInjectableInterface
         $title = "Tärningsspelet 100";
         $page = $this->app->page;
         $session = $this->app->session;
+
+        // Get game status
         $game = $session->get('game');
 
+        // Save game data
         $data = [
             "playerPoints" => $game->diceHand()[0]->points(),
             "computerPoints" => $game->diceHand()[1]->points(),
@@ -70,6 +73,7 @@ class DiceGameController implements AppInjectableInterface
             "lastPlayer" => $session->get('lastPlayer') ?? null,
             "lastValues" => $session->get('lastValues') ?? null,
             "lastPoints" => $session->get('lastPoints') ?? null,
+            "lastHistogram" => $session->get('lastHistogram') ?? null,
             "endGame" => $game->endGame()
         ];
 
@@ -99,7 +103,6 @@ class DiceGameController implements AppInjectableInterface
         } else {
             $redirect = "game/reset";
         }
-
         return $this->app->response->redirect($redirect);
     }
 
@@ -122,11 +125,13 @@ class DiceGameController implements AppInjectableInterface
         $diceHand->calculateSum();
         $lastPoints = $diceHand->sum();
         $lastValues = $diceHand->values();
+        $lastHistogram = $diceHand->Histogram();
 
         // Save game status in session
         $session->set('lastPlayer', $player);
         $session->set('lastValues', $lastValues);
         $session->set('lastPoints', $lastPoints);
+        $session->set('lastHistogram', $lastHistogram);
 
         // Change player if dice has value 1
         if (in_array(1, $diceHand->values())) {
@@ -156,9 +161,11 @@ class DiceGameController implements AppInjectableInterface
         // Save current game status in session
         $lastPoints = $diceHand->sum();
         $lastValues = $diceHand->values();
+        $lastHistogram = $diceHand->Histogram();
         $session->set('lastPlayer', $player);
         $session->set('lastValues', $lastValues);
         $session->set('lastPoints', $lastPoints);
+        $session->set('lastHistogram', $lastHistogram);
 
         return $this->app->response->redirect("game/save");
     }
@@ -204,6 +211,7 @@ class DiceGameController implements AppInjectableInterface
         $session->delete('lastPlayer');
         $session->delete('lastPoints');
         $session->delete('lastValues');
+        $session->delete('lastHistogram');
 
         return $this->app->response->redirect("game/start");
     }

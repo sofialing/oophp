@@ -273,3 +273,7 @@ input[type=submit]:disabled {
 .w50 {
     flex-basis: 45%;
 }
+
+.w100 {
+    flex-basis: 96%;
+}

@@ -37,7 +37,7 @@ namespace Anax\View;
             <?php for ($i = 0; $i < count($lastValues); $i++) { ?>
                 <i class="dice-sprite dice-<?= $lastValues[$i] ?>"></i>
             <?php } ?>
-            <p>Poäng: <?= $lastPoints ?></p>
+            <p>Sammanlagd poäng: <?= $lastPoints ?></p>
         <?php } ?>
     </div>
     <div class ="w50">
@@ -45,3 +45,14 @@ namespace Anax\View;
         <p><?= $name[0]?>: <?= $playerPoints?> <br> <?= $name[1]?>: <?= $computerPoints?></p>
     </div>
 </div>
+
+<div class="container">
+    <div class="w100">
+        <?php if ($lastPlayer === 0 || $lastPlayer === 1) { ?>
+        <h3><?= $name[$lastPlayer] ?>s tidigare tärningskast</h3>
+        <pre><?= $lastHistogram->getAsText() ?></pre>
+        <?php } ?>
+    </div>
+</div>
+
+<!-- <?php include("debug.php") ?> -->
