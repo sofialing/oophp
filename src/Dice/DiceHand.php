@@ -28,7 +28,6 @@ class DiceHand
         $this->values = [];
         $this->sum = 0;
         $this->points = 0;
-
         for ($i = 0; $i < $dices; $i++) {
             $this->dices[]  = new Dice();
             $this->values[] = [];
@@ -100,7 +99,7 @@ class DiceHand
     {
         $this->points += $this->sum;
     }
-
+    
     /**
      * Get points
      *

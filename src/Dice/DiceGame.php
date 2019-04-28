@@ -60,6 +60,16 @@ class DiceGame
     }
 
     /**
+     * Get the players histogram
+     *
+     * @return array consisting of the players names.
+     */
+    public function histogram()
+    {
+        return $this->histogram;
+    }
+
+    /**
      * Get the current player
      *
      * @return int the number of the current players
@@ -103,17 +113,18 @@ class DiceGame
     {
         $min = 15;
         $sum = 0;
-        $i = $this->currentPlayer;
+        $diceHand = $this->diceHand[$this->currentPlayer];
 
         while ($sum < $min) {
-            $this->diceHand[$i]->roll();
-            $this->diceHand[$i]->calculateSum();
-            $sum = $this->diceHand[$i]->sum();
+            $diceHand->roll();
+            $diceHand->calculateSum();
+            $sum = $diceHand->sum();
 
-            if (in_array(1, $this->diceHand[$i]->values())) {
+            if (in_array(1, $diceHand->values())) {
                 break;
             }
         }
+
         return "Datorn har kastat färdigt";
     }
 }

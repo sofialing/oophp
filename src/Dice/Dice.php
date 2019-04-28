@@ -11,7 +11,7 @@ class Dice
      * @var int $sides  The number of sides of dice.
      */
     private $number;
-    private $sides;
+    protected $sides;
 
     /**
      * Constructor to initiate the dicehand with a number of dices.
