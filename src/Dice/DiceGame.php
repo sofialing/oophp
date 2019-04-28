@@ -60,16 +60,6 @@ class DiceGame
     }
 
     /**
-     * Get the players histogram
-     *
-     * @return array consisting of the players names.
-     */
-    public function histogram()
-    {
-        return $this->histogram;
-    }
-
-    /**
      * Get the current player
      *
      * @return int the number of the current players
