@@ -76,10 +76,10 @@ class DiceHand
      */
     public function calculateSum()
     {
-        if (!in_array(1, $this->values)) {
-            $this->sum += array_sum($this->values);
-        } else {
+        if (in_array(1, $this->values)) {
             $this->sum = 0;
+        } else {
+            $this->sum += array_sum($this->values);
         }
     }
 
@@ -98,9 +98,9 @@ class DiceHand
      *
      * @return void
      */
-    public function setPoints()
+    public function setPoints(int $sum)
     {
-        $this->points += $this->sum;
+        $this->points += $sum;
     }
 
     /**
@@ -111,16 +111,6 @@ class DiceHand
     public function points()
     {
         return $this->points;
-    }
-
-    /**
-     * Get the dices
-     *
-     * @return object the dices
-     */
-    public function dices()
-    {
-        return $this->dices;
     }
 
     /**

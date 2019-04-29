@@ -47,11 +47,17 @@ class Histogram
      */
     public function getAsText()
     {
+        $res = "";
         for ($i = $this->min; $i <= $this->max; $i++) {
             if (in_array($i, $this->serie)) {
-                echo $i . ": " . str_repeat("&#10006;", count(array_keys($this->serie, $i))) . "\r\n";
+                $res .= "{$i}: ";
+                for ($d = 0; $d < count(array_keys($this->serie, $i)); $d++) {
+                    $res .= "&#10006";
+                }
+                $res .= "\r\n";
             }
         }
+        return $res;
     }
 
     /**

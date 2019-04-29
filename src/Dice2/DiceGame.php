@@ -101,28 +101,38 @@ class DiceGame
      */
     public function autoPlay()
     {
+        $diceHand = $this->diceHand[1];
+        $min = $this->computerMinPoints();
+        $sum = 0;
+        $values = [];
+
+        while (!in_array(1, $values) && $sum < $min) {
+            $diceHand->roll();
+            $diceHand->calculateSum();
+            $sum = $diceHand->sum();
+            $values = $diceHand->values();
+        }
+        return "Datorn har kastat färdigt";
+    }
+
+    /**
+     * Get min amount of points for computer to roll
+     *
+     * @return int
+     */
+    public function computerMinPoints()
+    {
         $playerPoints = $this->diceHand[0]->points();
         $computerPoints = $this->diceHand[1]->points();
         $diff = $playerPoints - $computerPoints;
-        $diceHand = $this->diceHand[1];
-        $sum = 0;
 
         if ($diff < 30 && $diff > 15) {
             $min = $playerPoints - $computerPoints;
         } elseif ($diff > 30) {
-            $min = 20;
+            $min = 25;
         } else {
             $min = 15;
         }
-
-        while ($sum < $min) {
-            $diceHand->roll();
-            $diceHand->calculateSum();
-            $sum = $diceHand->sum();
-            if (in_array(1, $diceHand->values())) {
-                break;
-            }
-        }
-        return "Datorn har kastat färdigt";
+        return $min;
     }
 }

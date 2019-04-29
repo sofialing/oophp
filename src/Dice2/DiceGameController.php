@@ -192,7 +192,7 @@ class DiceGameController implements AppInjectableInterface
         $diceHand = $game->diceHand()[$player];
 
         // Set points and reset current sum
-        $diceHand->setPoints();
+        $diceHand->setPoints($diceHand->sum());
         $diceHand->resetSum();
 
         // Change current player
