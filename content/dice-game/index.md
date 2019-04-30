@@ -9,4 +9,4 @@ Spelaren bestämmer om ett nytt kast skall göras inom samma spelrunda för att 
 
 Om spelaren kastar en etta så avbryts spelrundan och turen går över till nästa spelare. Nuvarande spelare förlorar alla poäng som samlats in i nuvaranade spelrunda.
 
-[Klicka här för att spela](dice/start)
+[Klicka här för att spela (kmom03)](dice/start)  |  [Klicka här för att spela (kmom04)](game/start)
