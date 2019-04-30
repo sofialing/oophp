@@ -17,6 +17,10 @@ class DiceGameTest extends TestCase
     {
         $game = new \Soln\Dice2\DiceGame();
         $this->assertInstanceOf("\Soln\Dice2\DiceGame", $game);
+
+        $res = $game->diceHand();
+        $exp = 2;
+        $this->assertEquals($exp, sizeof($res));
     }
 
     /**
@@ -30,41 +34,19 @@ class DiceGameTest extends TestCase
     }
 
     /**
-     *  Construct object and tests method 'diceHand'
-     */
-    public function testDiceHand()
-    {
-        $game = new \Soln\Dice2\DiceGame();
-        $this->assertInstanceOf("\Soln\Dice2\DiceGame", $game);
-
-        $res = $game->diceHand();
-        $exp = 2;
-        $this->assertEquals($exp, sizeof($res));
-    }
-
-    /**
-     * Construct object and tests method 'playerName'.
-     */
-    public function testPlayerName()
-    {
-        $game = new \Soln\Dice2\DiceGame("Test name");
-        $this->assertInstanceOf("\Soln\Dice2\DiceGame", $game);
-
-        $res = $game->playerName()[0];
-        $exp = "Test name";
-        $this->assertEquals($exp, $res);
-    }
-
-    /**
      * Construct object and tests method 'currentPlayer'
      */
     public function testCurrentPlayer()
     {
-        $game = new \Soln\Dice2\DiceGame();
+        $game = new \Soln\Dice2\DiceGame("Test name");
         $this->assertInstanceOf("\Soln\Dice2\DiceGame", $game);
 
         $res = $game->currentPlayer();
         $exp = 0;
+        $this->assertEquals($exp, $res);
+
+        $res = $game->playerName()[0];
+        $exp = "Test name";
         $this->assertEquals($exp, $res);
     }
 
@@ -139,7 +121,7 @@ class DiceGameTest extends TestCase
 
         $res = $game->autoPlay();
         $exp = "Datorn har kastat färdigt";
-        
+
         $this->assertEquals($exp, $res);
     }
 
