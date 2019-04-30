@@ -22,9 +22,7 @@ namespace Anax\View;
             <input type="submit" name="doInit" value="Starta nytt spel" class="btn-100">
     <?php } else { ?>
             <input type="submit" name="rollDices" value="Kasta tärningarna" class="btn-100">
-            <?php if ($lastPoints != null) { ?>
-                <input type="submit" name="savePoints" value="Spara poäng" class="btn-100">
-            <?php } ?>
+            <input type="submit" name="savePoints" value="Spara poäng" class="btn-100">
             <input type="submit" name="doInit" value="Starta nytt spel" class="btn-100">
     <?php } ?>
 </form>
@@ -48,13 +46,16 @@ namespace Anax\View;
     </div>
 </div>
 
-<div class="container">
-    <div class="w100">
-        <?php if ($lastPlayer === 0 || $lastPlayer === 1) { ?>
-        <h3><?= $name[$lastPlayer] ?>s tidigare tärningskast</h3>
-        <pre><?= $lastHistogram->getAsText() ?></pre>
-        <?php } ?>
+<?php if (isset($lastHistogram)) { ?>
+    <div class="container">
+        <div class="w100">
+            <?php if ($lastPlayer === 0 || $lastPlayer === 1) { ?>
+            <h3><?= $name[$lastPlayer] ?>s tidigare tärningskast</h3>
+            <pre><?= $lastHistogram->getAsText() ?></pre>
+            <?php } ?>
+        </div>
     </div>
-</div>
+<?php } ?>
+
 
 <!-- <?php include("debug.php") ?> -->
