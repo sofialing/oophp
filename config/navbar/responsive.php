@@ -50,5 +50,10 @@ return [
             "url" => "dice-game",
             "title" => "Spela tärningsspelet 100",
         ],
+        [
+            "text" => "Filmer",
+            "url" => "movie",
+            "title" => "Film databas",
+        ],
     ],
 ];

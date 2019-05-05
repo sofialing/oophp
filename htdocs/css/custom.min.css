@@ -211,7 +211,8 @@ h1 {
     color: #353238;
 }
 
-input[type=text] {
+input[type=text],
+input[type=number] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -221,7 +222,8 @@ input[type=text] {
     box-sizing: border-box;
 }
 
-input[type=submit] {
+input[type=submit],
+input[type=reset] {
     padding: 1em 1.5em;
     margin-top: 1em;
     font-size: 14px;
@@ -238,6 +240,44 @@ input[type=submit]:disabled {
     background-color: #f3f1ef;
     color: #353238;
 }
+
+
+/* Style the search field */
+form.search input[type=text] {
+  padding: 10px;
+  float: left;
+  width: 85%;
+  background: #f1f1f1;
+  border-radius: 0;
+  margin-top: 20px;
+}
+
+/* Style the submit button */
+form.search input[type=submit] {
+    float: left;
+    width: 15%;
+    padding: 10px;
+    background: #92140c;
+    margin: 8px 0;
+    border-radius: 0;
+    height: 46px;
+    border: 1px solid #6c7a89;
+    border-left: none;
+    margin-top: 20px;
+}
+
+form.search button:hover {
+  background: #0b7dda;
+}
+
+/* Clear floats */
+form.search::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+
 
 .btn-100 {
     width: 100%;
@@ -276,4 +316,53 @@ input[type=submit]:disabled {
 
 .w100 {
     flex-basis: 96%;
+}
+
+
+fieldset {
+    border: none;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    padding: 0.8em;
+    font-size: 14px;
+    vertical-align: top;
+}
+
+/* tr:nth-child(even) {
+    background-color: #f2f2f2;
+} */
+
+tr:hover {
+    background-color: #ececec;
+}
+
+th {
+    font-size: 14px;
+    text-align: left;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    background-color: #353238;
+    color: white;
+}
+
+img.thumb {
+    max-width: 150px;
+    max-height: 150px;
+}
+
+.orderby a {
+    color: white;
+    text-decoration: none;
+}
+
+.orderby a:hover {
+    color: #ececec;
 }

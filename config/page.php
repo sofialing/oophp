@@ -21,6 +21,7 @@ return [
             "stylesheets" => [
                 // Change here to set another default stylesheet
                 "https://fonts.googleapis.com/css?family=Roboto:400,500,700,900",
+                "https://use.fontawesome.com/releases/v5.7.2/css/all.css",
                 "css/custom.min.css"
                 //"css/another.min.css",
             ],
