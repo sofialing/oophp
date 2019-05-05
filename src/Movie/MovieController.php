@@ -211,26 +211,13 @@ class MovieController implements AppInjectableInterface
     public function addAction() : object
     {
         $title = "Lägg till film | Filmdatabas";
+        $request = $this->app->request;
 
         // Check if logged in
         if (!$this->app->session->get('user')) {
             // Redirect to login page
             return $this->app->response->redirect("movie/login");
         }
-
-        // Add and render page to add movie to database
-        $this->app->page->add("movie/add");
-        return $this->app->page->render(["title" => $title,]);
-    }
-
-    /**
-     * Add new movie to database.
-     *
-     * @return object
-     */
-    public function addActionPost() : object
-    {
-        $request = $this->app->request;
 
         // Deal with incoming variables
         $movieTitle = esc($request->getPost("movieTitle"));
@@ -241,10 +228,14 @@ class MovieController implements AppInjectableInterface
         if ($request->getPost("doSave")) {
             $sql = "INSERT INTO movie (title, year, image) VALUES (?, ?, ?);";
             $this->app->db->execute($sql, [$movieTitle, $movieYear, $movieImage]);
+
+            // Redirect to display movie database
+            return $this->app->response->redirect("movie/");
         }
 
-        // Redirect to display movie database
-        return $this->app->response->redirect("movie/");
+        // Add and render page to add movie to database
+        $this->app->page->add("movie/add");
+        return $this->app->page->render(["title" => $title,]);
     }
 
     /**
@@ -255,7 +246,7 @@ class MovieController implements AppInjectableInterface
     public function loginAction() : object
     {
         $title = "Logga in | Filmdatabas";
-        
+
         // Deal with incoming variables
         $user = $this->app->request->getPost('user');
         $pass = $this->app->request->getPost('pass');
