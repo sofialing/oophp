@@ -55,8 +55,7 @@ class MovieController implements AppInjectableInterface
         $max = ceil($max[0]->max / $route["hits"]);
 
         // Prepare and execute sql-statement
-        $sql = ($request->getGet("hits") ? $this->obj->paginateHits($route, $max, "movie") :
-        $this->obj->getAll($route, $max, "movie"));
+        $sql = $this->obj->getAll($route, $max, "movie");
         $resultset = $this->app->db->executeFetchAll($sql);
 
         // Save data
