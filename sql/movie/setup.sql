@@ -43,3 +43,24 @@ INSERT INTO `movie` (`title`, `year`, `image`) VALUES
 ;
 
 SELECT * FROM `movie`;
+
+
+--
+-- Create table for login
+--
+DROP TABLE IF EXISTS `login`;
+CREATE TABLE `login`
+(
+    `user` VARCHAR(20),
+    `pass` CHAR(32),
+
+    PRIMARY KEY (`user`)
+) ENGINE INNODB CHARACTER SET utf8 COLLATE utf8_swedish_ci;
+
+DELETE FROM `login`;
+INSERT INTO `login` VALUES
+	('doe', MD5('doe')),
+	('admin', MD5('admin'))
+;
+
+SELECT * FROM `login`;

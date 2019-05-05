@@ -1,8 +1,7 @@
-<h1>Logga in</h1>
+<h1>Du måste vara inloggad för att göra ändringar i databasen.</h1>
 
 <form method="post">
     <fieldset>
-    <input type="hidden" name="route" value="add"/>
 
         <label>Användarnamn:</label>
         <input type="text" name="user">
@@ -13,8 +12,7 @@
         <br>
 
         <input type="submit" name="login" value="Logga in">
-    <p>
-        <a href="show-all-movies">Tillbaka till alla filmer</a>
-    </p>
     </fieldset>
 </form>
+
+<a href="../movie">Tillbaka till alla filmer</a>

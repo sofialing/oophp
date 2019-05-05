@@ -37,15 +37,15 @@ class MovieController implements AppInjectableInterface
 
         // Deal with incoming variables
         $route = [
-            "orderBy" => $request->getGet("orderBy", "id"),
-            "order"   => $request->getGet("order", "asc"),
-            "hits"    => $request->getGet("hits", 4),
-            "page"    => $request->getGet("page", 1)
+            "orderBy" => esc($request->getGet("orderBy", "id")),
+            "order"   => esc($request->getGet("order", "asc")),
+            "hits"    => esc($request->getGet("hits", 4)),
+            "page"    => esc($request->getGet("page", 1))
         ];
 
         // Check if search and redirect to show search result
         if ($request->getGet("search")) {
-            $search = $request->getGet("search");
+            $search = esc(($request->getGet("search")));
             return $this->app->response->redirect("movie/search/$search");
         }
 
@@ -82,7 +82,7 @@ class MovieController implements AppInjectableInterface
 
         // Check if a new search has been made and redirect
         if ($this->app->request->getGet("search")) {
-            $search = $this->app->request->getGet("search");
+            $search = esc($this->app->request->getGet("search"));
             return $this->app->response->redirect("movie/search/$search");
         }
 
@@ -111,6 +111,12 @@ class MovieController implements AppInjectableInterface
     {
         $title = "Uppdatera film | Filmdatabas";
 
+        // Check if logged in
+        if (!$this->app->session->get('user')) {
+            // Redirect to login page
+            return $this->app->response->redirect("movie/login");
+        }
+
         // Prepare and execute sql-statement
         $sql = "SELECT * FROM movie WHERE id = ?;";
         $resultset = $this->app->db->executeFetchAll($sql, [$id]);
@@ -136,10 +142,10 @@ class MovieController implements AppInjectableInterface
         $request = $this->app->request;
 
         // Deal with incoming variables
-        $movieId    = $id;
-        $movieTitle = $request->getPost("movieTitle");
-        $movieYear  = $request->getPost("movieYear");
-        $movieImage = $request->getPost("movieImage");
+        $movieId    = esc($id);
+        $movieTitle = esc($request->getPost("movieTitle"));
+        $movieYear  = esc($request->getPost("movieYear"));
+        $movieImage = esc($request->getPost("movieImage"));
 
         // Prepare and execute sql-statement to update selected movie
         if ($request->getPost("doSave")) {
@@ -160,6 +166,12 @@ class MovieController implements AppInjectableInterface
     public function deleteActionGet($id) : object
     {
         $title = "Radera film | Filmdatabas";
+
+        // Check if logged in
+        if (!$this->app->session->get('user')) {
+            // Redirect to login page
+            return $this->app->response->redirect("movie/login");
+        }
 
         // Prepare and execute sql-statement
         $sql = "SELECT * FROM movie WHERE id = ?;";
@@ -200,6 +212,12 @@ class MovieController implements AppInjectableInterface
     {
         $title = "Lägg till film | Filmdatabas";
 
+        // Check if logged in
+        if (!$this->app->session->get('user')) {
+            // Redirect to login page
+            return $this->app->response->redirect("movie/login");
+        }
+
         // Add and render page to add movie to database
         $this->app->page->add("movie/add");
         return $this->app->page->render(["title" => $title,]);
@@ -215,9 +233,9 @@ class MovieController implements AppInjectableInterface
         $request = $this->app->request;
 
         // Deal with incoming variables
-        $movieTitle = $request->getPost("movieTitle");
-        $movieYear  = $request->getPost("movieYear");
-        $movieImage = $request->getPost("movieImage");
+        $movieTitle = esc($request->getPost("movieTitle"));
+        $movieYear  = esc($request->getPost("movieYear"));
+        $movieImage = esc($request->getPost("movieImage"));
 
         // Prepare and execute sql-statement to add new movie
         if ($request->getPost("doSave")) {
@@ -227,5 +245,52 @@ class MovieController implements AppInjectableInterface
 
         // Redirect to display movie database
         return $this->app->response->redirect("movie/");
+    }
+
+    /**
+     * Display page to login
+     *
+     * @return object
+     */
+    public function loginAction() : object
+    {
+        $title = "Logga in | Filmdatabas";
+        
+        // Deal with incoming variables
+        $user = $this->app->request->getPost('user');
+        $pass = $this->app->request->getPost('pass');
+        $pass = MD5($pass);
+
+        if ($this->app->request->getPost('login')) {
+            $sql = "SELECT user FROM login WHERE user LIKE ? AND pass = ?;";
+            $resultset = $this->app->db->executeFetchAll($sql, [$user, $pass]);
+            if ($resultset != null) {
+                $this->app->session->set('user', $user);
+                return $this->app->response->redirect("movie/");
+            }
+        }
+
+        // Add and render page to login
+        $this->app->page->add("movie/login");
+        return $this->app->page->render(["title" => $title,]);
+    }
+
+    /**
+     * Display page to logout
+     *
+     * @return object
+     */
+    public function logoutAction() : object
+    {
+        $title = "Logga ut | Filmdatabas";
+
+        if ($this->app->request->getPost('logout')) {
+            $this->app->session->delete('user');
+            return $this->app->response->redirect("movie/");
+        }
+
+        // Add and render page to logout
+        $this->app->page->add("movie/logout");
+        return $this->app->page->render(["title" => $title,]);
     }
 }
