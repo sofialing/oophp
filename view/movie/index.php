@@ -54,7 +54,7 @@ $defaultRoute = "movie?"
 
 
 <a href="<?= url("movie/add") ?>">Lägg till ny film</a>
-<?php if($app->session->get('user')) : ?>
+<?php if ($app->session->get('user')) : ?>
     | <a href="<?= url("movie/logout") ?>"> Logga ut</a>
 <?php else : ?>
     | <a href="<?= url("movie/login") ?>">Logga in</a>
