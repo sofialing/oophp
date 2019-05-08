@@ -5,8 +5,8 @@ namespace Anax\View;
 
 <div class="content-nav">
     <a href="<?= url("content") ?>">Visa allt innehåll</a> &#x2f;
-    <a href="#">Visa sidor</a> &#x2f;
-    <a href="#">Visa blogg</a> &#x2f;
+    <a href="<?= url("content/pages") ?>">Visa sidor</a> &#x2f;
+    <a href="<?= url("content/blog") ?>">Visa blogg</a> &#x2f;
     <a href="<?= url("content/create") ?>">Lägg till innehåll</a> &#x2f;
     <?php if ($app->session->get('user')) : ?>
         <a href="<?= url("content/logout") ?>">Logga ut</a>

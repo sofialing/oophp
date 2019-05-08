@@ -110,3 +110,50 @@ function slugify($str)
     $str = trim(preg_replace('/-+/', '-', $str), '-');
     return $str;
 }
+
+/**
+ * Create sql-statement to get all pages
+ *
+ * @return str the sql-statement
+ */
+function getAllPages()
+{
+    $sql = "SELECT
+            *,
+            CASE
+                WHEN (deleted <= NOW()) THEN 'isDeleted'
+                WHEN (published <= NOW()) THEN 'isPublished'
+                ELSE 'notPublished'
+            END AS status
+        FROM content
+        WHERE type = ?;";
+    return $sql;
+}
+
+/**
+ * Create sql-statement to get all blog posts
+ *
+ * @return str the sql-statement
+ */
+function getAllBlogPosts()
+{
+    $sql = "SELECT
+            *,
+            DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%dT%TZ') AS published_iso8601,
+            DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%d') AS published
+            FROM content
+            WHERE type=?
+            ORDER BY published DESC;";
+    return $sql;
+}
+
+/**
+ * Create sql-statement to get all blog posts
+ *
+ * @return str the sql-statement
+ */
+function loginCheck()
+{
+    $sql = "SELECT user FROM login WHERE user LIKE ? AND pass = ?;";
+    return $sql;
+}

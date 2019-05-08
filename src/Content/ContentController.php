@@ -183,7 +183,7 @@ class ContentController implements AppInjectableInterface
         $pass = MD5($pass);
 
         if (hasKeyPost("login")) {
-            $sql = "SELECT user FROM login WHERE user LIKE ? AND pass = ?;";
+            $sql = loginCheck();
             $res = $this->app->db->executeFetchAll($sql, [$user, $pass]);
             if ($res != null) {
                 $this->app->session->set('user', $user);
@@ -212,6 +212,42 @@ class ContentController implements AppInjectableInterface
 
         // Add and render page to logout
         $this->app->page->add("content/logout");
+        return $this->app->page->render(["title" => $title,]);
+    }
+
+    /**
+     * Display all pages
+     *
+     * @return object
+     */
+    public function pagesAction() : object
+    {
+        $title = "Visar alla sidor";
+
+        $sql = getAllPages();
+        $res = $this->app->db->executeFetchAll($sql, ["page"]);
+        $data["res"] = $res;
+
+        // Add and render page to logout
+        $this->app->page->add("content/pages", $data);
+        return $this->app->page->render(["title" => $title,]);
+    }
+
+    /**
+     * Display all blog posts
+     *
+     * @return object
+     */
+    public function blogAction() : object
+    {
+        $title = "Visar alla blogginlägg";
+
+        $sql = getAllBlogPosts();
+        $res = $this->app->db->executeFetchAll($sql, ["post"]);
+        $data["res"] = $res;
+
+        // Add and render page to logout
+        $this->app->page->add("content/blog", $data);
         return $this->app->page->render(["title" => $title,]);
     }
 }
