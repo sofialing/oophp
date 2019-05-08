@@ -41,8 +41,22 @@ INSERT INTO `content` (`path`, `slug`, `type`, `title`, `data`, `filter`) VALUES
 
 SELECT `id`, `path`, `slug`, `type`, `title`, `created` FROM `content`;
 
+--
+-- Create table for login
+--
+DROP TABLE IF EXISTS `login`;
+CREATE TABLE `login`
+(
+    `user` VARCHAR(20),
+    `pass` CHAR(32),
 
---
---
---
---   ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`user`)
+) ENGINE INNODB CHARACTER SET utf8 COLLATE utf8_swedish_ci;
+
+DELETE FROM `login`;
+INSERT INTO `login` VALUES
+	('doe', MD5('doe')),
+	('admin', MD5('admin'))
+;
+
+SELECT * FROM `login`;
