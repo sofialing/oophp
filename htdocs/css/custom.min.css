@@ -213,7 +213,8 @@ h1 {
 
 input[type=text],
 input[type=number],
-input[type=password] {
+input[type=password],
+input[type=datetime] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
