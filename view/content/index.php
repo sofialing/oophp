@@ -20,7 +20,6 @@ if (!$res) {
         <th>Updated</th>
         <th>Deleted</th>
         <th></th>
-        <th></th>
     </tr>
 <?php $id = -1; foreach ($res as $content) :
     $id++; ?>
@@ -34,10 +33,17 @@ if (!$res) {
         <td><?= $content->created ?></td>
         <td><?= $content->updated ?></td>
         <td><?= $content->deleted ?></td>
-        <td><a href="<?= url("content/edit/$content->id") ?>"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a></td>
-        <td><a href="<?= url("content/delete/$content->id") ?>"><i class="fas fa-trash" aria-hidden="true"></i></a></td>
+        <?php if ($app->session->get('user')) : ?>
+            <td><a href="<?= url("content/edit/$content->id") ?>"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a></td>
+        <?php endif; ?>
     </tr>
 <?php endforeach; ?>
 </table>
 
-<p><a href="<?= url("content/create") ?>">Lägg till nytt innehåll</a></p>
+<?php if ($app->session->get('user')) : ?>
+    <p><a href="<?= url("content/create") ?>">Lägg till nytt innehåll</a></p>
+    <p>Inloggad som: <?= $app->session->get('user') ?> <strong> | </strong>
+    <a href="<?= url("content/logout") ?>">Logga ut</a></p>
+<?php else : ?>
+    <a href="<?= url("content/login") ?>">Logga in</a></p>
+<?php endif; ?>

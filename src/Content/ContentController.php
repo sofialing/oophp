@@ -35,7 +35,7 @@ class ContentController implements AppInjectableInterface
         $data["heading"] = $title;
 
         // Add and render page to display database
-        $this->app->page->add("content/admin", $data);
+        $this->app->page->add("content/index", $data);
         return $this->app->page->render(["title" => $title,]);
     }
 
@@ -48,11 +48,10 @@ class ContentController implements AppInjectableInterface
     {
         $title = "Skapa nytt innehåll";
 
-        // Check if logged in
-        // if (!$this->app->session->get('user')) {
-        //     // Redirect to login page
-        //     return $this->app->response->redirect("content/login");
-        // }
+        // Check if not logged in, redirect to login page
+        if (!$this->app->session->get('user')) {
+            return $this->app->response->redirect("content/login");
+        }
 
         if (hasKeyPost("doSave")) {
             $title = getPost("contentTitle");
@@ -78,11 +77,10 @@ class ContentController implements AppInjectableInterface
     {
         $title = "Uppdatera innehåll";
 
-        // Check if logged in
-        // if (!$this->app->session->get('user')) {
-        //     // Redirect to login page
-        //     return $this->app->response->redirect("content/login");
-        // }
+        // Check if not logged in, redirect to login page
+        if (!$this->app->session->get('user')) {
+            return $this->app->response->redirect("content/login");
+        }
 
         // Prepare and execute sql-statement
         $sql = "SELECT * FROM content WHERE id = ?;";
@@ -143,11 +141,10 @@ class ContentController implements AppInjectableInterface
     {
         $title = "Radera innehåll";
 
-        // Check if logged in
-        // if (!$this->app->session->get('user')) {
-        //     // Redirect to login page
-        //     return $this->app->response->redirect("content/login");
-        // }
+        // Check if not logged in, redirect to login page
+        if (!$this->app->session->get('user')) {
+            return $this->app->response->redirect("content/login");
+        }
 
         if (hasKeyPost("doDelete")) {
             $sql = "UPDATE content SET deleted=NOW() WHERE id=?;";
@@ -164,6 +161,53 @@ class ContentController implements AppInjectableInterface
 
         // Add and render page to delete content
         $this->app->page->add("content/delete", $data);
+        return $this->app->page->render(["title" => $title,]);
+    }
+
+    /**
+     * Display page to login
+     *
+     * @return object
+     */
+    public function loginAction() : object
+    {
+        $title = "Logga in";
+
+        // Deal with incoming variables
+        $user = getPost('user');
+        $pass = getPost('pass');
+        $pass = MD5($pass);
+
+        if (hasKeyPost("login")) {
+            $sql = "SELECT user FROM login WHERE user LIKE ? AND pass = ?;";
+            $res = $this->app->db->executeFetchAll($sql, [$user, $pass]);
+            if ($res != null) {
+                $this->app->session->set('user', $user);
+                return $this->app->response->redirect("content");
+            }
+        }
+
+        // Add and render page to login
+        $this->app->page->add("content/login");
+        return $this->app->page->render(["title" => $title,]);
+    }
+
+    /**
+     * Display page to logout
+     *
+     * @return object
+     */
+    public function logoutAction() : object
+    {
+        $title = "Logga ut";
+
+        if (hasKeyPost("logout")) {
+            $this->app->session->delete('user');
+            return $this->app->response->redirect("content");
+        }
+
+        // Add and render page to logout
+        $this->app->page->add("content/logout");
         return $this->app->page->render(["title" => $title,]);
     }
 }
