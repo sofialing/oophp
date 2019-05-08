@@ -1,6 +1,7 @@
 <?php
 namespace Anax\View;
 
+require "nav.php";
 ?>
 
 <h1>Du måste vara inloggad för att göra ändringar i databasen.</h1>

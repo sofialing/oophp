@@ -1,15 +1,14 @@
 <?php
 namespace Anax\View;
 
+require "nav.php";
+
 ?>
 
-<h1>Radera innehåll</h1>
+<h1>Vill du radera sidan "<?= esc($content->title) ?>"?</h1>
 
 <form method="post">
     <fieldset>
-        <label>Titel:</label>
-        <input type="text" name="contentTitle" value="<?= esc($content->title) ?>" readonly>
-
         <input type="submit" name="doDelete" value="Radera">
     </fieldset>
 </form>

@@ -1,6 +1,7 @@
 <?php
 namespace Anax\View;
 
+require "nav.php";
 ?>
 
 <h1>Lägg till nytt innehåll</h1>

@@ -4,6 +4,8 @@ namespace Anax\View;
 if (!$res) {
     return;
 }
+
+require "nav.php";
 ?>
 
 <h1>Uppdatera innehåll "<?= $res->title ?>"</h1>
@@ -41,6 +43,7 @@ if (!$res) {
         <br>
 
         <input type="submit" name="doSave" value="Spara">
+        <input type="submit" name="doDelete" value="Radera">
         <input type="reset" value="Återställ">
     </fieldset>
 </form>

@@ -102,6 +102,10 @@ class ContentController implements AppInjectableInterface
      */
     public function editActionPost($id) : object
     {
+        if (hasKeyPost("doDelete")) {
+            return $this->app->response->redirect("content/delete/$id");
+        }
+
         if (hasKeyPost("doSave")) {
             $params = getPost([
                 "contentTitle",

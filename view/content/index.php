@@ -4,9 +4,12 @@ namespace Anax\View;
 if (!$res) {
     return;
 }
+
+require "nav.php";
 ?>
 
 <h1><?= $heading ?></h1>
+
 
 <table>
     <tr class="first">
@@ -39,11 +42,3 @@ if (!$res) {
     </tr>
 <?php endforeach; ?>
 </table>
-
-<?php if ($app->session->get('user')) : ?>
-    <p><a href="<?= url("content/create") ?>">Lägg till nytt innehåll</a></p>
-    <p>Inloggad som: <?= $app->session->get('user') ?> <strong> | </strong>
-    <a href="<?= url("content/logout") ?>">Logga ut</a></p>
-<?php else : ?>
-    <a href="<?= url("content/login") ?>">Logga in</a></p>
-<?php endif; ?>

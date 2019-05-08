@@ -1,6 +1,8 @@
 <?php
 namespace Anax\View;
 
+require "nav.php";
+
 ?>
 
 <h1>Du är inloggad som: <?= $app->session->get('user') ?>. <br> Vill du logga ut?</h1>
