@@ -106,6 +106,12 @@ class ContentController implements AppInjectableInterface
             return $this->app->response->redirect("content/delete/$id");
         }
 
+        if (hasKeyPost("undoDelete")) {
+            $sql = "UPDATE content SET deleted=null WHERE id=?;";
+            $this->app->db->execute($sql, [$id]);
+            return $this->app->response->redirect("content");
+        }
+
         if (hasKeyPost("doSave")) {
             $params = getPost([
                 "contentTitle",

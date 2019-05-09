@@ -8,6 +8,11 @@ if (!$res) {
 require "nav.php";
 ?>
 
+<pre>
+    <?php var_dump($res) ?>
+</pre>
+
+
 <h1>Uppdatera innehåll "<?= $res->title ?>"</h1>
 
 <form method="post">
@@ -43,7 +48,11 @@ require "nav.php";
         <br>
 
         <input type="submit" name="doSave" value="Spara">
-        <input type="submit" name="doDelete" value="Radera">
+        <?php if ($res->deleted === null) : ?>
+            <input type="submit" name="doDelete" value="Radera">
+        <?php else : ?>
+            <input type="submit" name="undoDelete" value="Återskapa">
+        <?php endif; ?>
         <input type="reset" value="Återställ">
     </fieldset>
 </form>
