@@ -240,16 +240,44 @@ class ContentController implements AppInjectableInterface
     }
 
     /**
+     * Display all pages
+     *
+     * @return object
+     */
+    public function pageAction($path = null) : object
+    {
+        if (!$path) {
+            return $this->app->response->redirect("content");
+        }
+
+        $sql = getSelectedPage();
+        $content = $this->app->db->executeFetch($sql, [$path, "page"]);
+        $title = "titel";
+        $data["content"] = $content;
+
+        // Add and render page to logout
+        $this->app->page->add("content/page", $data);
+        return $this->app->page->render(["title" => $title,]);
+    }
+
+    /**
      * Display all blog posts
      *
      * @return object
      */
-    public function blogAction() : object
+    public function blogAction($slug = null) : object
     {
         $title = "Visar alla blogginlägg";
 
-        $sql = getAllBlogPosts();
-        $res = $this->app->db->executeFetchAll($sql, ["post"]);
+        if ($slug) {
+            $sql = getBlogPost();
+            $res = $this->app->db->executeFetch($sql, [$slug, "post"]);
+            $title = $res->title;
+        } else {
+            $sql = getAllBlogPosts();
+            $res = $this->app->db->executeFetchAll($sql, ["post"]);
+        }
+
         $data["res"] = $res;
 
         // Add and render page to logout

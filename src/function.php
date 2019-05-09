@@ -131,6 +131,26 @@ function getAllPages()
 }
 
 /**
+ * Create sql-statement to get selected page
+ *
+ * @return str the sql-statement
+ */
+function getSelectedPage()
+{
+    $sql = "SELECT
+            *,
+            DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%dT%TZ') AS modified_iso8601,
+            DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%d') AS modified
+            FROM content
+            WHERE
+            path = ?
+            AND type = ?
+            AND (deleted IS NULL OR deleted > NOW())
+            AND published <= NOW();";
+    return $sql;
+}
+
+/**
  * Create sql-statement to get all blog posts
  *
  * @return str the sql-statement
@@ -143,6 +163,29 @@ function getAllBlogPosts()
             DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%d') AS published
             FROM content
             WHERE type=?
+            AND (deleted IS NULL OR deleted > NOW())
+            AND published <= NOW()
+            ORDER BY published DESC;";
+    return $sql;
+}
+
+/**
+ * Create sql-statement to get selected blog posts
+ *
+ * @return str the sql-statement
+ */
+function getBlogPost()
+{
+    $sql = "SELECT
+            *,
+            DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%dT%TZ') AS published_iso8601,
+            DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%d') AS published
+            FROM content
+            WHERE
+            slug = ?
+            AND type = ?
+            AND (deleted IS NULL OR deleted > NOW())
+            AND published <= NOW()
             ORDER BY published DESC;";
     return $sql;
 }
