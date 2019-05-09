@@ -8,11 +8,6 @@ if (!$res) {
 require "nav.php";
 ?>
 
-<pre>
-    <?php var_dump($res) ?>
-</pre>
-
-
 <h1>Uppdatera innehåll "<?= $res->title ?>"</h1>
 
 <form method="post">
