@@ -13,15 +13,15 @@ require "nav.php";
 
 <table class="content-table">
     <tr class="first">
-        <th style="width:50px">Id <br> <?= orderby("id", $defaultRoute) ?></th>
-        <th>Title <br> <?= orderby("title", $defaultRoute) ?></th>
-        <th>Type <br> <?= orderby("type", $defaultRoute) ?></th>
-        <th>Path <br> <?= orderby("path", $defaultRoute) ?></th>
-        <th>Slug <br> <?= orderby("slug", $defaultRoute) ?></th>
-        <th>Published <br> <?= orderby("published", $defaultRoute) ?></th>
-        <th>Created <br> <?= orderby("created", $defaultRoute) ?></th>
-        <th>Updated <br> <?= orderby("updated", $defaultRoute) ?></th>
-        <th>Deleted <br> <?= orderby("deleted", $defaultRoute) ?></th>
+        <th><?= orderby("id", $defaultRoute) ?> <br> Id</th>
+        <th><?= orderby("title", $defaultRoute) ?> <br> Title</th>
+        <th><?= orderby("type", $defaultRoute) ?> <br> Type</th>
+        <th><?= orderby("path", $defaultRoute) ?> <br> Path</th>
+        <th><?= orderby("slug", $defaultRoute) ?> <br> Slug</th>
+        <th><?= orderby("published", $defaultRoute) ?> <br> Published</th>
+        <th><?= orderby("created", $defaultRoute) ?> <br> Created</th>
+        <th><?= orderby("updated", $defaultRoute) ?> <br> Updated</th>
+        <th><?= orderby("deleted", $defaultRoute) ?> <br> Deleted</th>
         <th></th>
     </tr>
 <?php $id = -1; foreach ($res as $content) :
