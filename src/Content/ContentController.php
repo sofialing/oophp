@@ -27,12 +27,29 @@ class ContentController implements AppInjectableInterface
     public function indexAction() : object
     {
         $title = "Visar allt innehåll i databasen";
+        $db =  $this->app->db;
 
-        $sql = "SELECT * FROM content;";
-        $res = $this->app->db->executeFetchAll($sql);
+        // Deal with incoming variables
+        $route = [
+            "orderBy" => esc(getGet("orderBy", "id")),
+            "order"   => esc(getGet("order", "asc")),
+            "hits"    => esc(getGet("hits", 4)),
+            "page"    => esc(getGet("page", 1))
+        ];
 
-        $data["res"] = $res;
-        $data["heading"] = $title;
+        // Get max number of pages
+        $max = getMax($db, "movie");
+        $max = ceil($max[0]->max / $route["hits"]);
+
+        // Prepare and execute sql-statement
+        $res = getAll($db, $route, $max, "content");
+        // $res = $this->app->db->executeFetchAll($sql);
+
+        $data = [
+            "res" => $res,
+            "heading" => $title,
+            "max" => $max
+        ];
 
         // Add and render page to display database
         $this->app->page->add("content/index", $data);

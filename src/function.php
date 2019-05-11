@@ -95,6 +95,21 @@ function getPost($key, $default = null)
 }
 
 /**
+ * Get value from GET variable or return default value.
+ *
+ * @param string $key     to look for
+ * @param mixed  $default value to set if key does not exists
+ *
+ * @return mixed value from GET or the default value
+ */
+function getGet($key, $default = null)
+{
+    return isset($_GET[$key])
+        ? $_GET[$key]
+        : $default;
+}
+
+/**
  * Create a slug of a string, to be used as url.
  *
  * @param string $str the string to format as slug.
@@ -109,6 +124,72 @@ function slugify($str)
     $str = preg_replace('/[^a-z0-9-]/', '-', $str);
     $str = trim(preg_replace('/-+/', '-', $str), '-');
     return $str;
+}
+
+
+/**
+ * Get value from POST variable or return default value.
+ *
+ * @param mixed $key     to look for, or value array
+ * @param mixed $default value to set if key does not exists
+ *
+ * @return mixed value from POST or the default value
+ */
+function getMax($db, $table)
+{
+    $sql = "SELECT COUNT(id) AS max FROM $table;";
+    $max = $db->executeFetchAll($sql);
+    return $max;
+}
+
+/**
+ * Prepare sql-statement based on get parameters
+ *
+ * @param array $route as the get parameters
+ * @param int $max as max number of pages
+ *
+ * @return array sql-statement to execute
+ */
+function getAll($db, $route, $max, $table)
+{
+    $hits = $route["hits"];
+    $page = $route["page"];
+    $orderBy = $route["orderBy"];
+    $order = $route["order"];
+
+    // Incoming matches valid value sets
+    if (!(is_numeric($hits) && $hits > 0 && $hits <= 8)) {
+        throw new MovieException("Not valid for hits.");
+    }
+
+    // Incoming matches valid value sets
+    if (!(is_numeric($hits) && $page > 0 && $page <= $max)) {
+        throw new MovieException("Not valid for page.");
+    }
+    $offset = $hits * ($page - 1);
+
+    // Only these values are valid
+    $columns = [
+        "id",
+        "title",
+        "type",
+        "path",
+        "slug",
+        "published",
+        "created",
+        "updated",
+        "deleted"
+    ];
+    $orders = ["asc", "desc"];
+
+    // Incoming matches valid value sets
+    if (!(in_array($orderBy, $columns) && in_array($order, $orders))) {
+        throw new MovieException("Not valid input for sorting.");
+    }
+
+    $sql = "SELECT * FROM $table ORDER BY $orderBy $order LIMIT $hits OFFSET $offset;";
+    $res = $db->executeFetchAll($sql);
+    return $res;
 }
 
 /**
