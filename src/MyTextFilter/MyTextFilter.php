@@ -1,6 +1,6 @@
 <?php
 
-namespace Soln\TextMyFilter\TextFilter;
+namespace Soln\MyTextFilter;
 
 use Michelf\MarkdownExtra;
 
@@ -36,9 +36,10 @@ class MyTextFilter
     public function parse($text, $filter)
     {
         $formatted = $this->strip($text);
+        $filterArray = explode(",", $filter);
 
-        foreach ($filter as $value) {
-            switch ($value) {
+        foreach ($filterArray as $filter) {
+            switch ($filter) {
                 case 'bbcode':
                     $formatted = $this->bbcode2html($formatted);
                     break;
