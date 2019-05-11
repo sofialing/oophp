@@ -94,6 +94,12 @@ h1 {
   display: none;
 }
 
+.region-main {
+    width: 100%;
+    margin-left:0;
+    margin-right: 0;
+}
+
 .outer-wrap-footer {
     background-color:  #353238;
     color: white;
