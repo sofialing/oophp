@@ -100,10 +100,10 @@ class ContentController implements AppInjectableInterface
 
         // Prepare and execute sql-statement
         $sql = "SELECT * FROM content WHERE id = ?;";
-        $res = $this->app->db->executeFetchAll($sql, [$id]);
+        $res = $this->app->db->executeFetch($sql, [$id]);
 
         // Save resultset
-        $data["res"] = $res[0];
+        $data["res"] = $res;
 
         // Add and render page to edit content
         $this->app->page->add("content/edit", $data);
@@ -118,36 +118,43 @@ class ContentController implements AppInjectableInterface
      */
     public function editActionPost($id) : object
     {
+        $db = $this->app->db;
+
+        // Redirect to delete selected content
         if (hasKeyPost("doDelete")) {
             return $this->app->response->redirect("content/delete/$id");
         }
 
+        // Prepare and execute sql-statement to undo soft delete
         if (hasKeyPost("undoDelete")) {
-            $sql = "UPDATE content SET deleted=null WHERE id=?;";
-            $this->app->db->execute($sql, [$id]);
+            undoDelete($db, $id, "content");
             return $this->app->response->redirect("content");
         }
 
-        if (hasKeyPost("doSave")) {
-            $params = getPost([
-                "contentTitle",
-                "contentPath",
-                "contentSlug",
-                "contentData",
-                "contentType",
-                "contentFilter",
-                "contentPublish"
-            ]);
-            $params["contentId"] = $id;
-        }
+        // Deal with incoming variables
+        $params = getPost([
+            "contentTitle",
+            "contentPath",
+            "contentSlug",
+            "contentData",
+            "contentType",
+            "contentFilter",
+            "contentPublish",
+            "contentId"
+        ]);
 
-        if (!$params["contentSlug"]) {
-            $params["contentSlug"] = slugify($params["contentTitle"]);
-        }
+        $params["contentSlug"] = checkSlug($db, $params, $id);
+        $params["contentPath"] = checkPath($db, $params, $id);
 
-        if (!$params["contentPath"]) {
-            $params["contentPath"] = null;
-        }
+        // // Check slug, if null create one based on title
+        // if (!$params["contentSlug"]) {
+        //     $params["contentSlug"] = slugify($params["contentTitle"]);
+        // }
+        //
+        // // Check path, if null create one based on title
+        // if (!$params["contentPath"]) {
+        //     $params["contentPath"] = null;
+        // }
 
         $sql = "UPDATE content SET title=?, path=?, slug=?, data=?, type=?,
                filter=?, published=? WHERE id = ?;";
@@ -172,22 +179,34 @@ class ContentController implements AppInjectableInterface
             return $this->app->response->redirect("content/login");
         }
 
-        if (hasKeyPost("doDelete")) {
-            $sql = "UPDATE content SET deleted=NOW() WHERE id=?;";
-            $this->app->db->execute($sql, [$id]);
-            return $this->app->response->redirect("content");
-        }
-
         // Prepare and execute sql-statement
         $sql = "SELECT * FROM content WHERE id = ?;";
-        $res = $this->app->db->executeFetchAll($sql, [$id]);
+        $res = $this->app->db->executeFetch($sql, [$id]);
 
         // Save resultset
-        $data["content"] = $res[0];
+        $data["content"] = $res;
 
         // Add and render page to delete content
         $this->app->page->add("content/delete", $data);
         return $this->app->page->render(["title" => $title,]);
+    }
+
+    /**
+     * Do Soft delete on selected content.
+     *
+     * @param int $id as the id of selected content.
+     * @return object
+     */
+    public function deleteActionPost($id) : object
+    {
+        // Prepare and execute sql-statement
+        if (hasKeyPost("doDelete")) {
+            $sql = "UPDATE content SET deleted=NOW() WHERE id=?;";
+            $this->app->db->execute($sql, [$id]);
+        }
+
+        // Redirect to show content database
+        return $this->app->response->redirect("content");
     }
 
     /**

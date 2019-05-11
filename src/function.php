@@ -15,6 +15,7 @@ function esc($value)
     return htmlentities($value);
 }
 
+
 /**
  * Function to create links for sorting and keeping the original querystring.
  *
@@ -60,6 +61,7 @@ function mergeQueryString($options, $prepend = "?")
     return $prepend . http_build_query($query);
 }
 
+
 /**
  * Check if key is set in POST.
  *
@@ -71,6 +73,7 @@ function hasKeyPost($key)
 {
     return array_key_exists($key, $_POST);
 }
+
 
 /**
  * Get value from POST variable or return default value.
@@ -94,6 +97,7 @@ function getPost($key, $default = null)
         : $default;
 }
 
+
 /**
  * Get value from GET variable or return default value.
  *
@@ -108,6 +112,7 @@ function getGet($key, $default = null)
         ? $_GET[$key]
         : $default;
 }
+
 
 /**
  * Create a slug of a string, to be used as url.
@@ -128,12 +133,12 @@ function slugify($str)
 
 
 /**
- * Get value from POST variable or return default value.
+ * Get the max value from selected table
  *
- * @param mixed $key     to look for, or value array
- * @param mixed $default value to set if key does not exists
+ * @param object $db as the database connection
+ * @param str $table as the name of the table
  *
- * @return mixed value from POST or the default value
+ * @return int as the max value
  */
 function getMax($db, $table)
 {
@@ -142,13 +147,17 @@ function getMax($db, $table)
     return $max;
 }
 
+
 /**
- * Prepare sql-statement based on get parameters
+ * Prepare and execute sql-statement to get all data
+ * based on get parameters
  *
- * @param array $route as the get parameters
- * @param int $max as max number of pages
+ * @param object $db   the database connection
+ * @param array $route the get parameters
+ * @param int $max     max number of pages
+ * @param str $table   the name of the table
  *
- * @return array sql-statement to execute
+ * @return array       the result of the sql-statement
  */
 function getAll($db, $route, $max, $table)
 {
@@ -192,6 +201,7 @@ function getAll($db, $route, $max, $table)
     return $res;
 }
 
+
 /**
  * Create sql-statement to get all pages
  *
@@ -210,6 +220,7 @@ function getAllPages()
         WHERE type = ?;";
     return $sql;
 }
+
 
 /**
  * Create sql-statement to get selected page
@@ -231,6 +242,7 @@ function getSelectedPage()
     return $sql;
 }
 
+
 /**
  * Create sql-statement to get all blog posts
  *
@@ -249,6 +261,7 @@ function getAllBlogPosts()
             ORDER BY published DESC;";
     return $sql;
 }
+
 
 /**
  * Create sql-statement to get selected blog posts
@@ -271,8 +284,9 @@ function getBlogPost()
     return $sql;
 }
 
+
 /**
- * Create sql-statement to get all blog posts
+ * Create sql-statement to check login
  *
  * @return str the sql-statement
  */
@@ -280,4 +294,71 @@ function loginCheck()
 {
     $sql = "SELECT user FROM login WHERE user LIKE ? AND pass = ?;";
     return $sql;
+}
+
+/**
+ * Check slug and handle duplicate entry
+ *
+ * @param object $db    the database connection
+ * @param array $params the get parameters
+ * @param int $id       the id of selected content
+ *
+ * @return str          the new slug name
+ */
+function checkSlug($db, $params, $id)
+{
+    if (!$params["contentSlug"]) {
+        $params["contentSlug"] = slugify($params["contentTitle"]);
+    }
+
+    $sql = "SELECT * FROM content;";
+    $res = $db->executeFetchAll($sql);
+
+    foreach ($res as $row) {
+        if ($row->slug === $params["contentSlug"]) {
+            $params["contentSlug"] = "{$params['contentSlug']}-{$id}";
+        }
+    }
+
+    return $params["contentSlug"];
+}
+
+
+/**
+ * Check path and handle duplicate entry
+ *
+ * @param object $db    the database connection
+ * @param array $params the get parameters
+ * @param int $id       the id of selected content
+ *
+ * @return str          the new path name
+ */
+function checkPath($db, $params, $id)
+{
+    if (!$params["contentPath"]) {
+        $params["contentPath"] = null;
+    }
+
+    $sql = "SELECT * FROM content;";
+    $res = $db->executeFetchAll($sql);
+
+    foreach ($res as $row) {
+        if ($row->path === $params["contentPath"]) {
+            $params["contentPath"] = "{$params['contentPath']}-{$id}";
+        }
+    }
+
+    return $params["contentPath"];
+}
+
+
+/**
+ * Create and execute sql-statement to undo delete
+ *
+ * @return void
+ */
+function undoDelete($db, $id, $table)
+{
+    $sql = "UPDATE $table SET deleted=null WHERE id=?;";
+    $db->execute($sql, [$id]);
 }
