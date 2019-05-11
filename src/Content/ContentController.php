@@ -31,19 +31,18 @@ class ContentController implements AppInjectableInterface
 
         // Deal with incoming variables
         $route = [
-            "orderBy" => esc(getGet("orderBy", "id")),
-            "order"   => esc(getGet("order", "asc")),
-            "hits"    => esc(getGet("hits", 4)),
+            "orderBy" => esc(getGet("orderby", "created")),
+            "order"   => esc(getGet("order", "desc")),
+            "hits"    => esc(getGet("hits", 10)),
             "page"    => esc(getGet("page", 1))
         ];
 
         // Get max number of pages
-        $max = getMax($db, "movie");
-        $max = ceil($max[0]->max / $route["hits"]);
+        $max = getMax($db, "content");
+        $max = ceil($max->max / $route["hits"]);
 
         // Prepare and execute sql-statement
         $res = getAll($db, $route, $max, "content");
-        // $res = $this->app->db->executeFetchAll($sql);
 
         $data = [
             "res" => $res,
@@ -235,70 +234,6 @@ class ContentController implements AppInjectableInterface
 
         // Add and render page to logout
         $this->app->page->add("content/logout");
-        return $this->app->page->render(["title" => $title,]);
-    }
-
-    /**
-     * Display all pages
-     *
-     * @return object
-     */
-    public function pagesAction() : object
-    {
-        $title = "Visar alla sidor";
-
-        $sql = getAllPages();
-        $res = $this->app->db->executeFetchAll($sql, ["page"]);
-        $data["res"] = $res;
-
-        // Add and render page to logout
-        $this->app->page->add("content/pages", $data);
-        return $this->app->page->render(["title" => $title,]);
-    }
-
-    /**
-     * Display all pages
-     *
-     * @return object
-     */
-    public function pageAction($path = null) : object
-    {
-        if (!$path) {
-            return $this->app->response->redirect("content");
-        }
-
-        $sql = getSelectedPage();
-        $content = $this->app->db->executeFetch($sql, [$path, "page"]);
-        $title = "titel";
-        $data["content"] = $content;
-
-        // Add and render page to logout
-        $this->app->page->add("content/page", $data);
-        return $this->app->page->render(["title" => $title,]);
-    }
-
-    /**
-     * Display all blog posts
-     *
-     * @return object
-     */
-    public function blogAction($slug = null) : object
-    {
-        $title = "Visar alla blogginlägg";
-
-        if ($slug) {
-            $sql = getBlogPost();
-            $res = $this->app->db->executeFetch($sql, [$slug, "post"]);
-            $title = $res->title;
-        } else {
-            $sql = getAllBlogPosts();
-            $res = $this->app->db->executeFetchAll($sql, ["post"]);
-        }
-
-        $data["res"] = $res;
-
-        // Add and render page to logout
-        $this->app->page->add("content/blog", $data);
         return $this->app->page->render(["title" => $title,]);
     }
 }
