@@ -138,7 +138,7 @@ function slugify($str)
 function getMax($db, $table)
 {
     $sql = "SELECT COUNT(id) AS max FROM $table;";
-    $max = $db->executeFetchAll($sql);
+    $max = $db->executeFetch($sql);
     return $max;
 }
 
@@ -158,7 +158,7 @@ function getAll($db, $route, $max, $table)
     $order = $route["order"];
 
     // Incoming matches valid value sets
-    if (!(is_numeric($hits) && $hits > 0 && $hits <= 8)) {
+    if (!(is_numeric($hits) && $hits > 0 && $hits <= 10)) {
         throw new MovieException("Not valid for hits.");
     }
 

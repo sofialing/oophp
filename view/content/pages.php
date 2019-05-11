@@ -1,7 +1,7 @@
 <?php
 namespace Anax\View;
 
-if (!$res) {
+if (!$content) {
     return;
 }
 
@@ -17,15 +17,15 @@ require "nav.php";
         <th>Published</th>
         <th>Deleted</th>
     </tr>
-<?php $id = -1; foreach ($res as $content) :
+<?php $id = -1; foreach ($content as $row) :
     $id++; ?>
     <tr>
-        <td><?= $content->id ?></td>
-        <td><a href="<?= url("content/page/$content->path") ?>"><?= $content->title ?></a></td>
-        <td><?= $content->type ?></td>
-        <td><?= $content->status ?></td>
-        <td><?= $content->published ?></td>
-        <td><?= $content->deleted ?></td>
+        <td><?= $row->id ?></td>
+        <td><a href="<?= url("page/show-page/$row->path") ?>"><?= $row->title ?></a></td>
+        <td><?= $row->type ?></td>
+        <td><?= $row->status ?></td>
+        <td><?= $row->published ?></td>
+        <td><?= $row->deleted ?></td>
     </tr>
 <?php endforeach; ?>
 </table>
