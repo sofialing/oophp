@@ -12,7 +12,7 @@ require "nav.php";
 
 <form method="post">
     <fieldset>
-    <input type="hidden" name="id" value="<?= $res->id ?>">
+    <input type="hidden" name="contentId" value="<?= $res->id ?>">
 
         <label>Titel:</label>
         <input type="text" name="contentTitle" value="<?= $res->title ?>">

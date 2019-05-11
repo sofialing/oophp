@@ -392,3 +392,24 @@ img.thumb {
 .content-nav a:hover {
     text-decoration: underline;
 }
+
+.blog h1,
+.page h1 {
+    text-align: left;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.blog p,
+.page p {
+    margin-top: 0;
+}
+
+.blog a {
+    font-size: 1em;
+    text-decoration: none;
+}
+
+.blog a:hover {
+    text-decoration: underline;
+}
