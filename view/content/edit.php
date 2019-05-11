@@ -19,7 +19,7 @@ require "nav.php";
         <br>
 
         <label>Path:</label>
-        <input type="number" name="contentPath" value="<?= $res->path ?>">
+        <input type="text" name="contentPath" value="<?= $res->path ?>">
         <br>
 
         <label>Slug:</label>

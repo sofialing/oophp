@@ -11,7 +11,6 @@ require "nav.php";
 <article>
 
 <?php if (is_array($res)) : ?>
-
     <?php foreach ($res as $content) : ?>
     <section>
         <header>
@@ -21,17 +20,13 @@ require "nav.php";
         <?= esc($content->data) ?>
     </section>
     <?php endforeach; ?>
-
 <?php else : ?>
-
     <header>
         <h1><?= esc($res->title) ?></h1>
         <p><i>Publiserad: <time datetime="<?= esc($res->published_iso8601) ?>" pubdate><?= esc($res->published) ?></time></i></p>
     </header>
     <?= esc($res->data) ?>
-
     <p><a href="<?= url("content/blog") ?>">Alla inlägg</a></p>
-
 <?php endif; ?>
 
 </article>
