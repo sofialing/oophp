@@ -315,7 +315,7 @@ function checkSlug($db, $params, $id)
     $res = $db->executeFetchAll($sql);
 
     foreach ($res as $row) {
-        if ($row->slug === $params["contentSlug"]) {
+        if ($row->slug === $params["contentSlug"] && $row->id != $id) {
             $params["contentSlug"] = "{$params['contentSlug']}-{$id}";
         }
     }
@@ -337,14 +337,14 @@ function checkPath($db, $params, $id)
 {
     if (!$params["contentPath"]) {
         $params["contentPath"] = null;
-    }
+    } else {
+        $sql = "SELECT * FROM content;";
+        $res = $db->executeFetchAll($sql);
 
-    $sql = "SELECT * FROM content;";
-    $res = $db->executeFetchAll($sql);
-
-    foreach ($res as $row) {
-        if ($row->path === $params["contentPath"]) {
-            $params["contentPath"] = "{$params['contentPath']}-{$id}";
+        foreach ($res as $row) {
+            if ($row->path === $params["contentPath"] && $row->id != $id) {
+                $params["contentPath"] = "{$params['contentPath']}-{$id}";
+            }
         }
     }
 
