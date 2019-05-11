@@ -55,5 +55,10 @@ return [
             "url" => "movie",
             "title" => "Film databas",
         ],
+        [
+            "text" => "Content",
+            "url" => "content",
+            "title" => "Content databas",
+        ],
     ],
 ];
